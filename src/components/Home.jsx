@@ -72,13 +72,13 @@ const Home = () => {
         <div className='flex justify-around'>
           <button
             onClick={handleGetGrades}
-            className="bg-blue-500 text-white px-4 py-2 rounded min-w-40 mb-4"
+            className="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Display Grades
           </button>
           <button
             onClick={handleAddGrades}
-            className="bg-green-500 text-white px-4 py-2 rounded min-w-40 mb-4"
+            className="bg-green-500 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Add Grades
           </button>
@@ -101,3 +101,4 @@ const Home = () => {
 };
 
 export default Home;
+
