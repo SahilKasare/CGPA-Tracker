@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../supabaseClient";
@@ -8,15 +9,37 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
-    const { error } = await supabase
+    // Check if the email already exists
+    const { data: existingUser, error: fetchError } = await supabase
       .from("students")
-      .insert({ email, password });
+      .select("id")
+      .eq("email", email)
+      .single();
+
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      // If there is an error other than "no rows found" (PGRST116), log it
+      console.error("Error checking email:", fetchError.message);
+      alert(`Failed to sign up: ${fetchError.message}`);
+      return;
+    }
+
+    if (existingUser) {
+      alert("Email already exists. Please use a different email.");
+      return;
+    }
+
+    // Insert the new user
+    const { data, error } = await supabase
+      .from("students")
+      .insert({ email, password })
+      .select();
 
     if (error) {
       console.error("Error signing up:", error.message);
       alert(`Failed to sign up: ${error.message}`);
-    } else {
-      navigate("/home");
+    } else if (data && data.length > 0) {
+      // Use the correct data to navigate
+      navigate("/home", { state: { userId: data[0].id } });
     }
   };
 
@@ -59,4 +82,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
