@@ -1,4 +1,4 @@
-# Welcome to CGPA Calcultor 
+# Welcome to CGPA Tracker 
+**Platform to keep track of your progress.**
 
-* We hearby dont store any kind of data, feel free to use it in case of any concern.
 ## Thankyou
